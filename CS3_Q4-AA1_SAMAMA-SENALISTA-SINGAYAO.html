@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> CS3 - AA1 : Inventory System </title>
+<style>
+	       
+   body {
+        font-family: Times New Roman, sans-serif;
+		background-image: url('https://i.pinimg.com/originals/cc/88/ae/cc88ae0924a0364e863894ce3b72650b.jpg');
+		background-size: cover;
+    }
+	
+	h2 {
+        background-color: #8f828f;
+        padding: 10px;
+        text-align: center;
+		color: #16152d;
+		text-align:center;
+		}
+		
+    table {
+        border-collapse: collapse;
+        width: 100%;
+		 }
+		 
+    th, td {
+        border: 1px solid #000000;
+        text-align: left;
+        padding: 8px;
+		color: #16152d;
+		background-color: #629e96;
+		
+    }
+	
+    th {
+        background-color: #629e96;
+		color: black;
+    }
+	
+    .button {
+        padding: 8px 12px;
+        border: none;
+        background-color:#4b4f68;
+        color: black;
+        cursor: pointer;
+    }
+	
+    .button:hover {
+        background-color: #26284a;
+		color:white;
+    }
+	
+</style>
+</head>
+<body>
+
+<h2>Inventory System</h2>
+
+<table id="inventory">
+  <tr>
+    <th>Item Name</th>
+    <th>No. of Items</th>
+  </tr>
+</table>
+
+    <button class="button" onclick="addItem()">ADD ITEM</button>
+    <button class="button" onclick="addNoOfItem()">ADD QUANTITY</button>
+    <button class="button" onclick="subNoOfItem()">REMOVE QUANTITY</button>
+    <button class="button" onclick="removeItem()">REMOVE ITEM</button>
+	<button class="button" onclick="displayItems()">DISPLAY SUPPLY</button>
+
+
+<script>
+    var supply = [];
+
+    function addItem(name, num) {
+     var name = prompt("Enter name");
+	 var num = parseInt(prompt("Enter Quantity"));
+	 
+     supply.push({ itemName: name, noOfItem: num });
+        }
+		
+	function addNoOfItem(num) {
+	 var itemName = prompt("Enter name");
+	 var num1 = parseInt(prompt("Enter Quantity to add"));
+       
+        var item = supply.find(item => item.itemName === itemName);
+        if (item) {
+            item.noOfItem += num1;
+        } 
+		
+		else {
+            alert("Item does not exist in inventory.");
+        }
+    }
+
+    function subNoOfItem(num) {
+       var itemName = prompt("Enter name", "0");
+	   var num2 = parseInt(prompt("Enter Quantity to remove", "0"));
+
+        var item = supply.find(item => item.itemName === itemName);
+        if (item) {
+            if (item.noOfItem >= num2) {
+                item.noOfItem -= num2;
+            }
+
+			else {
+                alert("Not enough items in inventory.");
+            }
+			
+        } 
+		
+		else {
+            alert("Item does not exist in inventory.");
+        }
+    }
+
+    function removeItem() {
+        var itemName = prompt("Input the name to be removed", "0");
+        supply = supply.filter(item => item.itemName !== itemName);
+    }
+
+   function displayItems() {
+        var table = document.getElementById("inventory");
+        table.innerHTML = "<tr><th>Item Name</th><th>No. of Items</th></tr>";
+        supply.forEach(function(item) {
+            var row = table.insertRow();
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = item.itemName;
+            cell2.innerHTML = item.noOfItem;
+        });
+    }
+
+</script>
+
+</body>
+</html>
